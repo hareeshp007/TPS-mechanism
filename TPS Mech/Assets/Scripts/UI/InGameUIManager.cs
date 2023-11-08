@@ -14,6 +14,7 @@ namespace TPShooter.UI
         public Joystick CameraJoystick;
         public Button Jump;
         public Button Interact;
+        public Button Run;
 
         private void Start()
         {
