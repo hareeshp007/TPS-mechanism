@@ -1,18 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-
-public class PlayerServices : MonoBehaviour
+namespace TPShooter.Player
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerServices : MonoSingletonGeneric<PlayerServices>
     {
-        
-    }
+        public Transform StartPoint;
+        public PlayerScriptableObject PlayerSO;
+        [SerializeField]
+        private PlayerController playerController;
+        [SerializeField]
+        private PlayerView playerView;
+        [SerializeField]
+        private PlayerModel playerModel;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            SpawnPlayer();
+        }
+        private void SpawnPlayer()
+        {
+            this.playerModel = new PlayerModel(PlayerSO);
+            this.playerView = GameObject.Instantiate<PlayerView>(PlayerSO.player,StartPoint);
+            this.playerController=new PlayerController(this.playerModel,this.playerView);
+        }
     }
 }
+
