@@ -919,7 +919,10 @@ MonoBehaviour:
   GroundMask:
     serializedVersion: 2
     m_Bits: 128
-  speed: 6
+  InteractorSource:
+    serializedVersion: 2
+    m_Bits: 256
+  InteractorRange: 3
   horizontal: 0
   vertical: 0
   direction: {x: 0, y: 0, z: 0}

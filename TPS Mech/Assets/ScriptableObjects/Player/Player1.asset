@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  RunSpeed: 6
+  Speed: 5
+  RunSpeed: 8
   jumpHeight: 3
   JumpVariable: -2
   Gravity: -10
