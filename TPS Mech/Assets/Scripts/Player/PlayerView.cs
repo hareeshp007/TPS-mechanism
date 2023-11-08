@@ -12,6 +12,8 @@ namespace TPShooter.Player
         public Animator PlayerAnimator;
         public Transform GroundCheck;
         public LayerMask GroundMask;
+        public LayerMask InteractorSource;
+        public float InteractorRange;
 
         [Header("Movement")]
         [SerializeField]
@@ -27,7 +29,10 @@ namespace TPShooter.Player
         private float groundDistance = 0.4f;
         [SerializeField]
         private bool isGrounded;
-  
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         void Update()
         {
             inputHandle();
@@ -54,7 +59,8 @@ namespace TPShooter.Player
 
         private void setAnimationParameters()
         {
-            PlayerAnimator.SetFloat("speed", direction.magnitude);
+            float MovementSpeed = playerController.CurrentSpeed() * direction.magnitude;
+            PlayerAnimator.SetFloat("speed", MovementSpeed);
             PlayerAnimator.SetBool("isGrounded", isGrounded);
         }
 
@@ -63,12 +69,33 @@ namespace TPShooter.Player
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
             direction = new Vector3(horizontal, 0f, vertical).normalized;
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            if (isGrounded)
             {
-                PlayerAnimator.SetTrigger("Jump");
-                playerController.Jump();
+                if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+                {
+                    PlayerAnimator.SetTrigger("Jump");
+                    playerController.Jump();
+                }
+                if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
+                {
+                    playerController.Changespeed();
+                }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    interact();
+                }
             }
+            
 
+        }
+
+        private void interact()
+        {
+            Collider[] colliderArray = Physics.OverlapSphere(transform.position, InteractorRange, InteractorSource);
+            foreach (Collider collider in colliderArray)
+            {
+                collider.gameObject.GetComponent<IInteractable>().OnInteract();
+            }
         }
 
         public void SetPlayerController(PlayerController _playerController)
@@ -81,5 +108,8 @@ namespace TPShooter.Player
         {
             transform.rotation = Quaternion.Euler(0f, angleRotation, 0f);
         }
+
     }
+    
+
 }

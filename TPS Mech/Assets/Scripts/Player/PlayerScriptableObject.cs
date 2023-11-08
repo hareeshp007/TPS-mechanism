@@ -7,6 +7,7 @@ namespace TPShooter.Player
     {
         public int health;
         public int maxHealth;
+        public int Speed;
         public int RunSpeed;
         public float jumpHeight;
         public float JumpVariable; 
@@ -14,6 +15,8 @@ namespace TPShooter.Player
         public float turnTime;
         public float MinYVelocity;
         public PlayerView player;
+
+        
     }
 
 }

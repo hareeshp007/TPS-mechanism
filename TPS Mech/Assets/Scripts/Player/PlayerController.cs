@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 namespace TPShooter.Player
@@ -33,7 +34,7 @@ namespace TPShooter.Player
             float angleRotation = Mathf.SmoothDampAngle(playerView.transform.eulerAngles.y, targetAngle, ref playerModel.turnSmoothVelocity, playerModel.turnTime);
             playerView.RotatePlayer(angleRotation);
             Movedirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            return (Movedirection.normalized * playerModel.RunSpeed * Time.deltaTime);
+            return (Movedirection.normalized * playerModel.CurrentSpeed * Time.deltaTime);
             
 
         }
@@ -48,6 +49,16 @@ namespace TPShooter.Player
                 velocity.y = playerModel.JumpVariable;
             }
             return (velocity * Time.deltaTime);
+        }
+
+        public void Changespeed()
+        {
+            playerModel.SetCurrentSpeed();
+        }
+
+        public float CurrentSpeed()
+        {
+            return playerModel.CurrentSpeed;
         }
     }
 }
