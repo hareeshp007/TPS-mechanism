@@ -4,10 +4,10 @@ TP Mechanism
 In this project an player with MVC design architechture is implemented. Using interfaces different types of interactables are made.
 
 # Movements
-The basic movement are WASD or arrow keys.
-Toggle Run action
-for jumping space key is used
-For interacting with things around the player 'E' key is used
+- The basic movement are WASD or arrow keys.
+- Toggle Run action
+- for jumping space key is used
+- For interacting with things around the player 'E' key is used
   * For using a Large Lever
   * For Opening Gates
   * For Destroying Objects
