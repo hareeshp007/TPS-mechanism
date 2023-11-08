@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e22182c572773c74bb3a1a3ed1481b57, type: 3}
+  m_Name: Player1
+  m_EditorClassIdentifier: 
+  health: 100
+  maxHealth: 100
+  RunSpeed: 6
+  jumpHeight: 3
+  JumpVariable: -2
+  Gravity: -10
+  turnTime: 0.1
+  MinYVelocity: -10
+  player: {fileID: 8374766592002360951, guid: 79aab6665173cbf479700e4b7329bd48, type: 3}
