@@ -1,5 +1,4 @@
 
-using System;
 using TPShooter.UI;
 using UnityEngine;
 namespace TPShooter.Player

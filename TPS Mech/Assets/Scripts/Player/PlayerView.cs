@@ -1,8 +1,7 @@
 
-using System;
+
 using TPShooter.UI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TPShooter.Player
 {
@@ -42,18 +41,20 @@ namespace TPShooter.Player
         [SerializeField]
         private Joystick camerajoystick;
         [SerializeField]
-        private Button jumpButton;
+        private UnityEngine.UI.Button jumpButton;
         [SerializeField]
-        private Button interactButton;
+        private UnityEngine.UI.Button interactButton;
+        [SerializeField]
+        private UnityEngine.UI.Button RunButton;
 
 #endif
         private void Start()
         {
 #if UNITY_STANDALONE_WIN
-            Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 #endif
 #if UNITY_ANDROID
-            Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
 #endif
         }
         void Update()
@@ -104,16 +105,13 @@ namespace TPShooter.Player
             direction = new Vector3(horizontal, 0f, vertical).normalized;
             if (isGrounded)
             {
-
-
-                if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    PlayerAnimator.SetTrigger("Jump");
-                    playerController.Jump();
+                    jump();
                 }
                 if (Input.GetKeyDown(KeyCode.LeftShift) && isGrounded)
                 {
-                    playerController.Changespeed();
+                    run();
                 }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
@@ -121,19 +119,22 @@ namespace TPShooter.Player
                 }
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    if (Time.timeScale != 0)
-                    {
-                        gameUIManager.Pause();
-                    }
-                    else
-                    {
-                        gameUIManager.Resume();
-                    }
-
+                    escape()
                 }
 #endif
         }
+        private void escape()
+        {
+            if (Time.timeScale != 0)
+            {
+                gameUIManager.Pause();
+            }
+            else
+            {
+                gameUIManager.Resume();
+            }
 
+        }
 
         private void interact()
         {
@@ -168,9 +169,17 @@ namespace TPShooter.Player
             joystick = gameUIManager.PlayerJoystick;
             camerajoystick= gameUIManager.CameraJoystick;
             jumpButton=gameUIManager.Jump;
-            interactButton= gameUIManager.Interact;
+            RunButton = gameUIManager.Run;
+            interactButton = gameUIManager.Interact;
+            RunButton.onClick.AddListener(run);
             jumpButton.onClick.AddListener(jump);
             interactButton.onClick.AddListener(interact);
+            
+        }
+
+        private void run()
+        {
+            playerController.Changespeed();
         }
 
         private void jump()
