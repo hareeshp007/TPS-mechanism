@@ -1,6 +1,9 @@
 
 using System;
+using TPShooter.UI;
 using UnityEngine;
+using UnityEngine.UI;
+
 namespace TPShooter.Player
 {
     public class PlayerView : MonoBehaviour
@@ -14,6 +17,7 @@ namespace TPShooter.Player
         public LayerMask GroundMask;
         public LayerMask InteractorSource;
         public float InteractorRange;
+        public ThirdPersonCameraLook CinemachineCamera;
 
         [Header("Movement")]
         [SerializeField]
@@ -29,9 +33,28 @@ namespace TPShooter.Player
         private float groundDistance = 0.4f;
         [SerializeField]
         private bool isGrounded;
+        [SerializeField]
+        private InGameUIManager gameUIManager;
+
+#if UNITY_ANDROID
+        [SerializeField]
+        private Joystick joystick;
+        [SerializeField]
+        private Joystick camerajoystick;
+        [SerializeField]
+        private Button jumpButton;
+        [SerializeField]
+        private Button interactButton;
+
+#endif
         private void Start()
         {
+#if UNITY_STANDALONE_WIN
             Cursor.lockState = CursorLockMode.Locked;
+#endif
+#if UNITY_ANDROID
+            Cursor.lockState = CursorLockMode.None;
+#endif
         }
         void Update()
         {
@@ -44,6 +67,7 @@ namespace TPShooter.Player
         private void PhysicsExternal()
         {
             Vector3 velocity = playerController.PhysicsExternal(isGrounded);
+            Debug.Log(velocity);
             Controller.Move(velocity);
         }
 
@@ -52,7 +76,7 @@ namespace TPShooter.Player
             isGrounded = Physics.CheckSphere(GroundCheck.position, groundDistance, GroundMask);
             if (direction.magnitude > 0)
             {
-                Vector3 Movement = playerController.tPMovement(direction, Movedirection);
+                Vector3 Movement = playerController.TPMovement(direction, Movedirection, transform.eulerAngles) * Time.deltaTime;
                 Controller.Move(Movement);
             }
         }
@@ -66,11 +90,22 @@ namespace TPShooter.Player
 
         private void inputHandle()
         {
+#if UNITY_ANDROID
+            horizontal = joystick.Horizontal;
+            vertical = joystick.Vertical;
+            direction = new Vector3(horizontal, 0f, vertical).normalized;
+            Debug.Log(direction);
+            CinemachineCamera.setJoystick(camerajoystick);
+
+#endif
+#if UNITY_STANDALONE_WIN
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
             direction = new Vector3(horizontal, 0f, vertical).normalized;
             if (isGrounded)
             {
+
+
                 if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
                 {
                     PlayerAnimator.SetTrigger("Jump");
@@ -84,10 +119,21 @@ namespace TPShooter.Player
                 {
                     interact();
                 }
-            }
-            
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    if (Time.timeScale != 0)
+                    {
+                        gameUIManager.Pause();
+                    }
+                    else
+                    {
+                        gameUIManager.Resume();
+                    }
 
+                }
+#endif
         }
+
 
         private void interact()
         {
@@ -109,7 +155,30 @@ namespace TPShooter.Player
             transform.rotation = Quaternion.Euler(0f, angleRotation, 0f);
         }
 
-    }
-    
+        public void setUiManager(InGameUIManager inGameUIManager)
+        {
+            gameUIManager = inGameUIManager;
+#if UNITY_ANDROID
+            SetJoysticks();
+#endif
+        }
 
+        public void SetJoysticks()
+        {
+            joystick = gameUIManager.PlayerJoystick;
+            camerajoystick= gameUIManager.CameraJoystick;
+            jumpButton=gameUIManager.Jump;
+            interactButton= gameUIManager.Interact;
+            jumpButton.onClick.AddListener(jump);
+            interactButton.onClick.AddListener(interact);
+        }
+
+        private void jump()
+        {if(isGrounded)
+            {
+                PlayerAnimator.SetTrigger("Jump");
+                playerController.Jump();
+            }
+        }
+    }
 }

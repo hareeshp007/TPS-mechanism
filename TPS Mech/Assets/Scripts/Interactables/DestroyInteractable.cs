@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class DestroyInteractable : MonoBehaviour,IInteractable
+namespace TPShooter.Interactable
 {
-    public void OnInteract()
+    public class DestroyInteractable : MonoBehaviour, IInteractable
     {
-        this.gameObject.SetActive(false);
+        public void OnInteract()
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 }

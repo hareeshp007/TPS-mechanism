@@ -19,6 +19,6 @@ MonoBehaviour:
   jumpHeight: 3
   JumpVariable: -2
   Gravity: -10
-  turnTime: 0.1
+  turnTime: 0.2
   MinYVelocity: -10
   player: {fileID: 8374766592002360951, guid: 79aab6665173cbf479700e4b7329bd48, type: 3}
