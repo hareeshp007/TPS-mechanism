@@ -31,8 +31,10 @@ namespace TPShooter.Player
             this.playerModel = new PlayerModel(PlayerSO);
             this.playerView = GameObject.Instantiate<PlayerView>(PlayerSO.player,StartPoint);
             this.playerController=new PlayerController(this.playerModel,this.playerView);
-            
         }
+
+        
+
         public void SetUIManager(InGameUIManager InGameUIManager)
         {
             GameUI=InGameUIManager;

@@ -485,7 +485,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5105449217958491135}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18097785, y: -0.000000016922254, z: 0.0000000031139733, w: 0.9834872}
+  m_LocalRotation: {x: 0.18097785, y: 0.000000016922257, z: -0.000000003113974, w: 0.9834872}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -550,6 +550,7 @@ GameObject:
   - component: {fileID: 2035570489695654279}
   - component: {fileID: 189162140571882664}
   - component: {fileID: 1370296434591838550}
+  - component: {fileID: 5232894072640034382}
   m_Layer: 0
   m_Name: ThirdPersonCamera
   m_TagString: Untagged
@@ -710,6 +711,19 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
+--- !u!114 &5232894072640034382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5635052556623768361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52677bc115dee814492ebf5b2d366a21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraJoystick: {fileID: 0}
 --- !u!1 &5802417878079870721
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,12 +937,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   InteractorRange: 3
+  CinemachineCamera: {fileID: 5232894072640034382}
   horizontal: 0
   vertical: 0
   direction: {x: 0, y: 0, z: 0}
   Movedirection: {x: 0, y: 0, z: 0}
   groundDistance: 0.4
   isGrounded: 0
+  gameUIManager: {fileID: 0}
+  joystick: {fileID: 0}
+  Camerajoystick: {fileID: 0}
 --- !u!1 &6825764350997494760
 GameObject:
   m_ObjectHideFlags: 3
