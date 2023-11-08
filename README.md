@@ -5,12 +5,13 @@ In this project an player with MVC design architechture is implemented. Using in
 
 # Movements
 The basic movement are WASD or arrow keys.
+Toggle Run action
 for jumping space key is used
 For interacting with things around the player 'E' key is used
-  *For using a Large Lever
-  *For Opening Gates
-  *FOr Destroying Objects
-  *For Performing an Animation
+  * For using a Large Lever
+  * For Opening Gates
+  * For Destroying Objects
+  * For Performing an Animation
 
 # ESSERNTIAS
 For future development and experiment purpouse scriptable objects are used to create most of the player configurations
