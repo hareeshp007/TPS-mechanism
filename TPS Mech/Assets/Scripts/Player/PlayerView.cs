@@ -1,5 +1,6 @@
 
 using System;
+using TPShooter.UI;
 using UnityEngine;
 namespace TPShooter.Player
 {
@@ -29,6 +30,8 @@ namespace TPShooter.Player
         private float groundDistance = 0.4f;
         [SerializeField]
         private bool isGrounded;
+        [SerializeField]
+        private InGameUIManager gameUIManager;
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -44,6 +47,7 @@ namespace TPShooter.Player
         private void PhysicsExternal()
         {
             Vector3 velocity = playerController.PhysicsExternal(isGrounded);
+            Debug.Log(velocity);
             Controller.Move(velocity);
         }
 
@@ -52,7 +56,7 @@ namespace TPShooter.Player
             isGrounded = Physics.CheckSphere(GroundCheck.position, groundDistance, GroundMask);
             if (direction.magnitude > 0)
             {
-                Vector3 Movement = playerController.tPMovement(direction, Movedirection);
+                Vector3 Movement = playerController.TPMovement(direction, Movedirection,transform.eulerAngles) * Time.deltaTime;
                 Controller.Move(Movement);
             }
         }
@@ -71,6 +75,8 @@ namespace TPShooter.Player
             direction = new Vector3(horizontal, 0f, vertical).normalized;
             if (isGrounded)
             {
+
+#if UNITY_STANDALONE_WIN
                 if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
                 {
                     PlayerAnimator.SetTrigger("Jump");
@@ -84,9 +90,20 @@ namespace TPShooter.Player
                 {
                     interact();
                 }
-            }
-            
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    if (Time.timeScale != 0)
+                    {
+                        gameUIManager.Pause();
+                    }
+                    else
+                    {
+                        gameUIManager.Resume();
+                    }
 
+                }
+#endif
+            }
         }
 
         private void interact()
@@ -109,6 +126,10 @@ namespace TPShooter.Player
             transform.rotation = Quaternion.Euler(0f, angleRotation, 0f);
         }
 
+        public void setUiManager(InGameUIManager inGameUIManager)
+        {
+            gameUIManager=inGameUIManager;
+        }
     }
     
 

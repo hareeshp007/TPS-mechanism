@@ -1,16 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GateInteractable : MonoBehaviour, IInteractable
+namespace TPShooter.Interactable
 {
-    public Animator GateAnimator;
-    [SerializeField]
-    private bool GateOpen=false;
-
-    public void OnInteract()
+    public class GateInteractable : MonoBehaviour, IInteractable
     {
-        GateOpen = !GateOpen;
-        GateAnimator.SetBool("OpenGate", GateOpen);
+        public Animator GateAnimator;
+        [SerializeField]
+        private bool GateOpen = false;
+
+        public void OnInteract()
+        {
+            GateOpen = !GateOpen;
+            GateAnimator.SetBool("OpenGate", GateOpen);
+        }
     }
 }
+

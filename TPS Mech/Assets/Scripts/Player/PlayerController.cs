@@ -10,6 +10,7 @@ namespace TPShooter.Player
         private PlayerModel playerModel;
 
         private Vector3 velocity;
+        private float turnSmoothVelocity=0.0f;
 
         public PlayerController(PlayerModel model,PlayerView player)
         {
@@ -28,19 +29,22 @@ namespace TPShooter.Player
             velocity.y = Mathf.Sqrt(playerModel.JumpHeight * playerModel.JumpVariable * playerModel.Gravity);
             return velocity;
         }
-        public Vector3 tPMovement(Vector3 direction, Vector3 Movedirection)
+        public Vector3 TPMovement(Vector3 direction, Vector3 Movedirection,Vector3 eulerAngles)
         {
+            if (turnSmoothVelocity == float.NaN) { turnSmoothVelocity = 0.0f; }
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + playerView.Camera.eulerAngles.y;
-            float angleRotation = Mathf.SmoothDampAngle(playerView.transform.eulerAngles.y, targetAngle, ref playerModel.turnSmoothVelocity, playerModel.turnTime);
+            float angleRotation = Mathf.SmoothDampAngle(eulerAngles.y, targetAngle, ref turnSmoothVelocity, playerModel.turnTime);
+           // Debug.Log(targetAngle +"   "+ turnSmoothVelocity + "   " + playerModel.turnTime + "   " + eulerAngles.y);
             playerView.RotatePlayer(angleRotation);
             Movedirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            return (Movedirection.normalized * playerModel.CurrentSpeed * Time.deltaTime);
+            Vector3 movement = Movedirection.normalized * playerModel.CurrentSpeed ;
+            return movement;
             
 
         }
         public Vector3 PhysicsExternal(bool isGrounded)
         {
-            if (velocity.y > playerModel.MinYVelocity||!isGrounded)
+            if (velocity.y > playerModel.MinYVelocity || !isGrounded)
             {
                 velocity.y += playerModel.Gravity * Time.deltaTime;
             }

@@ -14,7 +14,6 @@ namespace TPShooter.Player
         public float JumpHeight { get; private set; }
         public float JumpVariable{ get; private set; }
         public float Gravity { get; private set; }
-        public float turnSmoothVelocity;
         public float turnTime { get; private set; }
         public float MinYVelocity { get; private set; }
 

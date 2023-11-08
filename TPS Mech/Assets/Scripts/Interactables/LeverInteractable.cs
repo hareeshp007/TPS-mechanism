@@ -1,15 +1,18 @@
 
 using UnityEngine;
 
-public class LeverInteractable : MonoBehaviour, IInteractable
+namespace TPShooter.Interactable
 {
-    public Animator Leveranimator;
-    [SerializeField]
-    private bool LeverOpen=false;
-    public void OnInteract()
+    public class LeverInteractable : MonoBehaviour, IInteractable
     {
-        Debug.Log("interacted");
-        LeverOpen = !LeverOpen;
-        Leveranimator.SetBool("isOpen", LeverOpen);
+        public Animator Leveranimator;
+        [SerializeField]
+        private bool LeverOpen = false;
+        public void OnInteract()
+        {
+            Debug.Log("interacted");
+            LeverOpen = !LeverOpen;
+            Leveranimator.SetBool("isOpen", LeverOpen);
+        }
     }
 }
